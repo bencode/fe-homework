@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="css/semantic.min.css">
+    <link rel="stylesheet" type="text/css" href="css/tabComponent.css">
+    <title>Tab切换组件</title>
+</head>
+<body>
+    <div class="ui container">
+        <div class="ui top attached tabular menu">
+            <a class="active item">个人简历 </a>
+            <a class="item">Photos </a>
+        </div>
+        <div class="ui bottom attached segment active">
+            <p>个人简历的内容</p>
+        </div>
+        <div class="ui bottom attached segment">
+            <p>photo的内容</p>
+        </div>
+    </div>
+    <script>
+
+        class Tab{
+            constructor(className){
+                this.className=className;
+                this.menu='';
+                this.items=null;
+                this.segments=null
+            }
+            init(){
+                this.menu=document.querySelector('.'+this.className);
+                this.items=this.menu.querySelectorAll('.item');
+                this.segments=document.querySelectorAll('.segment');
+                this.change();
+            }
+            change(){
+                const _this=this;
+                for( let i=0; i<this.items.length; i++ ){
+                    this.items[i].addEventListener('click',function(){
+                        this.index=i;
+                        for( let j=0; j<_this.items.length; j++ ){
+                            _this.items[j].classList.remove('active');
+                            _this.segments[j].classList.remove('active');
+                        }
+                        this.classList.add('active');
+                        _this.segments[this.index].classList.add('active');
+                    })
+                }
+            }
+        }
+
+        var tab=new Tab('menu');
+        tab.init();
+    </script>
+</body>
+</html>

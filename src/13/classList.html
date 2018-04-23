@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>classList的兼容写法</title>
+    <style>
+        .title{
+            color: #f00;
+        }
+        .title.active{
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h1 class="title active">战斗民族！俄罗斯航班上将出现“站票”1</h1>
+        <h1 class="title">战斗民族！俄罗斯航班上将出现“站票”2</h1>
+        <h1 class="title">战斗民族！俄罗斯航班上将出现“站票”3</h1>
+    </div>
+    <script>
+        //这里我是给Object对象加了add,remove,has方法，我不知道如何把classList添加进去
+        if (!("classList" in document.documentElement)) {
+
+            Object.prototype.add=function(){
+                var newArr=this.className.split(' ');
+                var len=arguments.length;
+                for (var i=0; i<len; i++){
+                    newArr.push(arguments[i])
+                }
+                newArr=eliminateRepeat(newArr);
+                var newClassNme=newArr.join(' ');
+                this.setAttribute('class',newClassNme);
+            },
+
+            Object.prototype.remove=function(){
+                console.log(arguments);
+                var newArr=this.className.split(' ');
+                var numArr=[];
+                for( var i=0; i<arguments.length;i++){
+                    numArr.push(newArr.indexOf(arguments[i]));
+                    newArr.splice(numArr[i],1);               
+                }
+                var newClassNme=newArr.join(' ');
+                this.setAttribute('class',newClassNme);
+            },
+
+            Object.prototype.has=function(){
+                console.log(arguments);
+                var newArr=this.className.split(' ');
+                for( var i=0; i<arguments.length; i++){
+                    var symbol=newArr.indexOf(arguments[i]);
+                    if(symbol===-1){
+                        return false;
+                    }
+                    else{
+                        return true;
+                    }
+                }
+            }
+        }
+        
+        var title=document.querySelectorAll('.title');
+        title[0].add('lala','lolo','lolp');
+        title[1].add();
+        title[2].add('title');
+        title[0].remove('lala','lolp');
+        console.log(title[0].has('active'));
+
+        //数组去重
+        function eliminateRepeat(oldArr){
+            var newArr=[];
+            for( var i=0; i<oldArr.length; i++){
+                var symbol=oldArr.indexOf(oldArr[i],i+1);
+                if(symbol===-1){
+                    newArr.push(oldArr[i]);
+                }
+            }
+            return newArr;
+        }
+    </script>
+</body>
+</html>

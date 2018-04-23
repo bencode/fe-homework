@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>   
+    if (!String.prototype.padStart) {
+        String.prototype.padStart=function( len, str ){
+            const _this=this;
+            let newString;
+            let newArray=_this.split('');
+            let oldString=newArray.join('');
+            const oldLength=_this.length;
+            if ( len>oldLength ) {
+                const childStringLen=str.length;
+                const newLength=len-oldLength;
+                const m=Math.floor(newLength/childStringLen);
+                const n=newLength%childStringLen;
+
+                newArray.unshift( str.substr(0,n) );
+                
+                for ( let i=0; i<m; i++ ) {
+                    newArray.unshift(str);
+                }
+                newString=newArray.join('');              
+            } else if( len<=oldLength||!str ) {
+                newString=oldString;
+            }
+            return newString;
+        };
+    }
+    const str='1234';
+    const newString=str.padStart(3,'0');
+    console.log(newString);
+    </script>
+</body>
+</html>

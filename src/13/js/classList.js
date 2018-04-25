@@ -40,12 +40,9 @@ Object.prototype.containClass=function(){
 //数组去重
 function eliminateRepeat(oldArr){
     var newArr=[];
-    for( var i=0; i<oldArr.length; i++){
-        var symbol=oldArr.indexOf(oldArr[i],i+1);
-        if(symbol===-1){
-            newArr.push(oldArr[i]);
-        }
-    }
+    oldArr.forEach((item,index)=> {
+        if(newArr.indexOf(item)=== -1) newArr.push(item);
+    });
     return newArr;
 }
 // 可以使用 newArr的indexOf来弄，这样会简洁些
@@ -66,7 +63,7 @@ function eliminateRepeat(arr) {
 //reduce方法实现
 //这个是我仿照官网上的
 function eliminateRepeat(arr){
-    var result=arr.sort().reduce( function(newArr, cur) {
+    var result=arr.sort().reduce( (newArr, cur) => {
         if( newArr.length===0 || newArr[newArr.length-1]!==cur ) newArr.push(cur);
         return newArr;
     },[]);

@@ -1,29 +1,23 @@
 const gulp = require('gulp');
 const $ = require('gulp-load-plugins')();
-const babel=require("gulp-babel");
 
-
-gulp.task('webserver', function() {
-  return gulp.src('./src')
+gulp.task('webserver', () => {
+  return gulp.src('.')
     .pipe($.webserver({
       livereload: true,
       open: true,
       directoryListing: {
         enable:true,
-        path: 'src'
+        path: '.'
       }
     }));
 });
 
 
-gulp.task('less', function () {
+gulp.task('less', () => {
   return gulp.src('./src/**/*.less')
-    .pipe($.plumber({
-      errorHandler (err) {
-        $.notify.onError('Error: <%= error.message %>')(err);
-        this.emit('end');
-      }
-    }))
+    .pipe(errorHandler())
+    .pipe($.cached('less'))
     .pipe($.sourcemaps.init())
     .pipe($.lessDev())
     .pipe($.autoprefixer('last 10 versions', 'ie 9'))
@@ -31,16 +25,9 @@ gulp.task('less', function () {
     .pipe(gulp.dest('./src'));
 });
 
-
-gulp.task('babel', function () {
-    return gulp.src('./src/**/*.js')
-        .pipe(babel({ presets: ['es2015'] }))
-        .pipe(gulp.dest('dist'));
-});
-
-
 gulp.task('watch', function() {
   gulp.watch('src/**/*.less', ['less']);
+  gulp.watch('src/**/*.js', ['js']);
 });
 
-gulp.task('default', ['webserver', 'watch', 'less','babel']);
+gulp.task('default', ['webserver', 'watch', 'less']);

@@ -1,6 +1,6 @@
 const gulp = require('gulp');
 const $ = require('gulp-load-plugins')();
-// const errorHandler = require('errorhandler');
+
 
 gulp.task('webserver', () => {
   return gulp.src('.')
@@ -26,9 +26,35 @@ gulp.task('less', () => {
     .pipe(gulp.dest('./src'));
 });
 
-gulp.task('watch', function() {
+
+gulp.task('js', () => {
+  gulp.src('src/**/*.js')
+    .pipe(errorHandler())
+    .pipe($.cached('js'))
+    .pipe($.sourcemaps.init())
+    .pipe($.babel({
+      presets: ['env']
+    }))
+    .pipe($.sourcemaps.write())
+    .pipe(gulp.dest('./dist'))
+});
+
+
+gulp.task('watch', () => {
   gulp.watch('src/**/*.less', ['less']);
   gulp.watch('src/**/*.js', ['js']);
 });
 
-gulp.task('default', ['webserver', 'watch', 'less']);
+
+function errorHandler() {
+  return $.plumber({
+    errorHandler(err) {
+      console.error(err);
+      $.notify.onError('Error: <%= error.message %>')(err);
+      this.emit('end');
+    }
+  });
+}
+
+
+gulp.task('default', ['webserver', 'watch', 'less', 'js']);

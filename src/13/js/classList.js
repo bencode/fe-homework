@@ -5,13 +5,15 @@ Object.prototype.add=function(){
     // 3. 如果是ES6，可以直接在函数参数中使用 spread参数：
     // https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Spread_syntax
     const newArr=this.className.split(' ');
+
     const argArray=Array.from(arguments);
-    for (let i=0; i<argArray.length; i++){
-        newArr.push(argArray[i])
-    }
+
+    argArray.forEach( item=>newArr.push( item ) );
+
     const newClassNme=eliminateRepeat(newArr).join(' ');
+
     this.setAttribute('class',newClassNme);
-},
+};
 
 Object.prototype.removeClass=function(){
     // 这个移除class的逻辑有点绕，可以简化
@@ -21,29 +23,19 @@ Object.prototype.removeClass=function(){
     // 接着尝试使用 数组的 filter 方法来完成
     const oldArr=this.className.split(' ');
     const argArr=Array.from(arguments);
-    const newArr=oldArr.filter(function(item){
-        return argArr.indexOf(item)===-1;
-    });
+    const newArr=oldArr.filter( item=>argArr.indexOf(item)===-1);
     const newClassNme=newArr.join(' ');
     this.setAttribute('class',newClassNme);
-},
+};
 
 Object.prototype.containClass=function(){
     // 实现的逻辑应正确的
     // 尝试使用数组的 find 方法来实现查找逻辑
     const newArr=this.className.split(' ');
     const arg=Array.from(arguments)[0];
-    const flag=newArr.find( function(item) {
-        return item===arg;
-    });
-
-    if(flag){
-        return true;
-    }
-    else{
-        return false;
-    }
-}
+    const flag=newArr.find( item => item===arg);
+    return flag ? true: false;
+};
 
 //数组去重
 function eliminateRepeat(oldArr){

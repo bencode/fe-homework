@@ -20,95 +20,12 @@
         <h1 class="title">战斗民族！俄罗斯航班上将出现“站票”2</h1>
         <h1 class="title">战斗民族！俄罗斯航班上将出现“站票”3</h1>
     </div>
+    <script src="js/classList.js"></script>
     <script>
-        //这里我是给Object对象加了add,remove,has方法，我不知道如何把classList添加进去
-
-        // 哦，其实这个的本意是，你只要实现几个操作class的方法就可以了，不需要去打补丁。
-        // 不过要打补丁也是可以的，我写个demo给你, 叫 myClassList.js，你看看
-        if (!("classList" in document.documentElement)) {
-
-            Object.prototype.add=function(){
-                var newArr=this.className.split(' ');
-                var len=arguments.length;
-                for (var i=0; i<len; i++){
-                    newArr.push(arguments[i])
-                }
-                // 当arguments快速变成一个数组有以下方法
-                // 1. 如果支持ES6, 则直接使用 Array.from(arguments)
-                // 2. 如果要支持ES5， 则可以使用 [].slice.call(arguments, 0)
-                // 3. 如果是ES6，可以直接在函数参数中使用 spread参数：
-                // https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Spread_syntax
-                newArr=eliminateRepeat(newArr);
-                var newClassNme=newArr.join(' ');
-                this.setAttribute('class',newClassNme);
-            },
-
-            Object.prototype.remove=function(){
-                // 这个移除class的逻辑有点绕，可以简化
-                // 应该是将原class打成数组
-                // 然后根据原来的数组，产生一个新的数组，里面的所有元素都不在参数中即可
-                // 你可以先用循环来完成
-                // 接着尝试使用 数组的 filter 方法来完成
-                console.log(arguments);
-                var newArr=this.className.split(' ');
-                var numArr=[];
-                for( var i=0; i<arguments.length;i++){
-                    numArr.push(newArr.indexOf(arguments[i]));
-                    newArr.splice(numArr[i],1);               
-                }
-                var newClassNme=newArr.join(' ');
-                this.setAttribute('class',newClassNme);
-            },
-
-            Object.prototype.has=function(){
-                console.log(arguments);
-                var newArr=this.className.split(' ');
-                // 实现的逻辑应正确的
-                // 尝试使用数组的 find 方法来实现查找逻辑
-                for( var i=0; i<arguments.length; i++){
-                    var symbol=newArr.indexOf(arguments[i]);
-                    if(symbol===-1){
-                        return false;
-                    }
-                    else{
-                        return true;
-                    }
-                }
-            }
-        }
-        
-        var title=document.querySelectorAll('.title');
+        const title=document.querySelectorAll('.title');
         title[0].add('lala','lolo','lolp');
-        title[1].add();
-        title[2].add('title');
-        title[0].remove('lala','lolp');
-        console.log(title[0].has('active'));
-
-        //数组去重
-        function eliminateRepeat(oldArr){
-            var newArr=[];
-            for( var i=0; i<oldArr.length; i++){
-                var symbol=oldArr.indexOf(oldArr[i],i+1);
-                if(symbol===-1){
-                    newArr.push(oldArr[i]);
-                }
-            }
-            return newArr;
-        }
-        // 可以使用 newArr的indexOf来弄，这样会简洁些
-        function eliminateRepeat(arr) {
-          var result = [];
-          for (var i = 0; i < arr.length; i++) {
-            if (result.indexOf(arr[i]) === -1) {
-              result.push(arr[i]);
-            }
-          }
-          return result;
-        }
-        // 你可以做以下尝试
-        // 1. 尝试把以上逻辑使用 数组的reduce方法来完成
-        // 2. 尝试使用ES6的 Set 数据结构来完成同样的功能
+        title[0].removeClass('lala','lolp');
+        console.log(title[0].containClass('active'));
     </script>
-    <script src="js/myClassList.js"></script>
 </body>
 </html>

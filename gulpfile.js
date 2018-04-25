@@ -1,5 +1,6 @@
 const gulp = require('gulp');
 const $ = require('gulp-load-plugins')();
+const babel=require("gulp-babel");
 
 
 gulp.task('webserver', function() {
@@ -31,8 +32,15 @@ gulp.task('less', function () {
 });
 
 
+gulp.task('babel', function () {
+    return gulp.src('./src/**/*.js')
+        .pipe(babel({ presets: ['es2015'] }))
+        .pipe(gulp.dest('dist'));
+});
+
+
 gulp.task('watch', function() {
   gulp.watch('src/**/*.less', ['less']);
 });
 
-gulp.task('default', ['webserver', 'watch', 'less']);
+gulp.task('default', ['webserver', 'watch', 'less','babel']);

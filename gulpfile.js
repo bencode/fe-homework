@@ -1,6 +1,6 @@
 const gulp = require('gulp');
 const $ = require('gulp-load-plugins')();
-const errorHandler = require('errorhandler')
+// const errorHandler = require('errorhandler');
 
 gulp.task('webserver', () => {
   return gulp.src('.')

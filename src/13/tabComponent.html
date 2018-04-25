@@ -30,6 +30,8 @@
                 this.items=null;
                 this.segments=null
             }
+            // 我觉得这个init直接在constructor中调用会更好
+            // 就不需要在构造tab对象后，主动调用一次了
             init(){
                 this.menu=document.querySelector('.'+this.className);
                 this.items=this.menu.querySelectorAll('.item');
@@ -37,10 +39,14 @@
                 this.change();
             }
             change(){
+              // 可以使用箭头函数，那么就不需要特别保存_this了，直接使用this就可以了。
+              // 不过那样的话，就不能使用事件的当前对象，不过这容易解决，且不容易出错。
+              // 比如你下面的就有一个隐藏错误
                 const _this=this;
                 for( let i=0; i<this.items.length; i++ ){
                     this.items[i].addEventListener('click',function(){
                         this.index=i;
+                        // 这个this.index 这里的this指的是当前点击的DOM对象，不是tab对象
                         for( let j=0; j<_this.items.length; j++ ){
                             _this.items[j].classList.remove('active');
                             _this.segments[j].classList.remove('active');

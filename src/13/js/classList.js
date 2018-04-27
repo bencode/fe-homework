@@ -4,7 +4,7 @@ Object.prototype.add=function(){
     // 2. 如果要支持ES5， 则可以使用 [].slice.call(arguments, 0)
     // 3. 如果是ES6，可以直接在函数参数中使用 spread参数：
     // https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Spread_syntax
-    const newArr=this.className.split(' ');
+    const newArr=this.className.split(/\s+/);
 
     const argArray=Array.from(arguments);
 
@@ -21,7 +21,7 @@ Object.prototype.removeClass=function(){
     // 然后根据原来的数组，产生一个新的数组，里面的所有元素都不在参数中即可
     // 你可以先用循环来完成
     // 接着尝试使用 数组的 filter 方法来完成
-    const oldArr=this.className.split(' ');
+    const oldArr=this.className.split(/\s+/);
     const argArr=Array.from(arguments);
     const newArr=oldArr.filter( item=>argArr.indexOf(item)===-1);
     const newClassNme=newArr.join(' ');
@@ -31,7 +31,7 @@ Object.prototype.removeClass=function(){
 Object.prototype.containClass=function(){
     // 实现的逻辑应正确的
     // 尝试使用数组的 find 方法来实现查找逻辑
-    const newArr=this.className.split(' ');
+    const newArr=this.className.split(/\s+/);
     const arg=Array.from(arguments)[0];
     const flag=newArr.find( item => item===arg);
     return flag ? true: false;

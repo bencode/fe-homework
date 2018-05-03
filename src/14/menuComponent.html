@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="css/semantic.min.css">
+    <link rel="stylesheet" type="text/css" href="css/menuComponent.css">
+    <title>菜单组件</title>
+</head>
+<body>
+    <div class="ui container">
+
+        <!-- 菜单 -->
+        <div class="menu-content">
+            <div class="ui three item menu">
+                <a class="item active">社论</a>
+                <a class="item">Reviews</a>
+                <a class="item">即将举办的活动</a>
+            </div>
+        </div>
+
+        <!-- tab切换 -->
+        <div class="ui three item tab-content">
+            <div class="ui top attached tabular menu">
+                <a class="active item">个人简历 </a>
+                <a class="item">Photos </a>
+            </div>
+            <div class="ui bottom attached segment active">
+                <p>个人简历的内容</p>
+            </div>
+            <div class="ui bottom attached segment">
+                <p>photo的内容</p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+
+        class Menu{
+            constructor (className) {
+
+                this.className=className;
+
+                this.init();
+
+            }
+            init () {
+
+                this.menuList=document.querySelectorAll( '.'+this.className+' .item' );
+
+                this.tabChange();
+
+            }
+            tabChange () {
+
+                this.menuList.forEach( (list, index) =>{
+
+                    list.addEventListener('click', () =>{
+
+                        this.menuList.forEach( (list) =>{
+
+                            list.classList.remove( 'active' );
+
+                        })
+
+                        list.classList.add( 'active' );
+
+                        return this.funCall ? this.funCall( index ) : true ;
+
+                    })
+                })
+            }
+        }
+
+        //Tab重用Menu
+        class Tab extends Menu{
+
+            constructor( className, panelClass, selected ){
+
+                super( className );
+
+                this.init2();
+            }
+
+            init2(){
+
+                this.rootClass=this.className || 'tab-content';
+
+                this.root=document.querySelector( '.'+this.rootClass );
+                
+                this.segments=this.root.querySelectorAll(" .segment" );
+
+                this.selected=this.selected || this.root.querySelector(" .item.active" );
+
+                let event=new Event('click');
+
+                this.selected.dispatchEvent(event);
+
+            }
+
+            funCall(index){
+                this.segments.forEach( (item) =>{
+
+                    item.classList.remove( 'active' );
+
+                    item.style.display='none';
+                })
+
+                this.segments[index].classList.add( 'active' );
+
+                this.segments[index].style.display='block';
+            }
+
+        }
+
+        const menu=new Menu('menu-content .menu');
+
+        const tab=new Tab('tab-content');
+
+    </script>
+</body>
+</html>

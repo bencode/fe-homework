@@ -28,7 +28,8 @@
                 this.className=className;
                 this.menu='';
                 this.items=null;
-                this.segments=null
+                this.segments=null;
+                this.init();
             }
             // 我觉得这个init直接在constructor中调用会更好
             // 就不需要在构造tab对象后，主动调用一次了
@@ -59,7 +60,6 @@
         }
 
         var tab=new Tab('menu');
-        tab.init();
     </script>
 </body>
 </html>

@@ -153,8 +153,8 @@
        * 构造一个Menu组件
        * @param {Element} elm     - 菜单DOM节点
        * @param {Object} options  - 选项
-       *  - itemSelector  项选择器，默认为 li
-       *  - onSwitch {Function} 切换回调函数
+       *  - itemSelector {String}     项选择器，默认为 li
+       *  - onSwitch {Function({ index })}       切换回调函数
        */
       function Menu2(elm, options) {
 
@@ -164,8 +164,9 @@
        * 构造一个Tab组件
        * @param {Element} elm    - Tab组件DOM节点
        * @param {Object} options - 可选参数
-       *  - tabSelector   tab点击选择器，默认为 '.menu .item'
-       *  - paneSelector  面板选择器，默认为 .pane
+       *  - tabSelector {String}     tab点击选择器，默认为 '.menu .item'
+       *  - paneSelector {String}    面板选择器，默认为 .pane
+       *  - onSwitch {Function({ index })}  切换回调函数
        */
       function Tab2(elm, options) {
 

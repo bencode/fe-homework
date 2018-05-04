@@ -44,23 +44,20 @@
             //   可以根据 typeof element === 'string' 来判断是选择器还是DOM元素
             // 2. 现在菜单里面能点的项的选择器，是写死.item的，建议加一个options的Object参数，
             //   里面有一个比如itemSelector的来配置，默认为'.item'
-            constructor (className) {
+            constructor ( opt ) {
 
-                this.className=className;
+                this.itemSelector='.item';
 
-                this.init();
+                Object.assign(this,opt);
+
+                this.menuList=( typeof this.nav==='string' ? document.querySelectorAll( this.nav+ ' '+this.itemSelector ) : this.nav.querySelectorAll( this.itemSelector ) ) ;
+
+                this.onMenuItemSwitch();
 
             }
             // 我觉得init其实就是初始化的意思，初始化其实就是constructor的意思
             // 所以可以直接把init里面的内容放到constractor里面来，因为现在这里只有两句话
-            init () {
-
-                this.menuList=document.querySelectorAll( '.'+this.className+' .item' );
-
-                this.tabChange();
-
-            }
-            tabChange () {
+            onMenuItemSwitch () {
 
                 this.menuList.forEach( (list, index) =>{
 
@@ -77,7 +74,7 @@
                         // 这里可以简写哦，this.funCall && this.funCall(index);
                         // 这个调用子类设计还不错，不过名字可以改得更合适一些
                         // 比如 onMenuItemSwitch等，我随便取的，你会发现，当花点时间想名字的时候，会对这个组件理解得更深刻。
-                        return this.funCall ? this.funCall( index ) : true ;
+                        return this.onTabPanelAwitch && this.onTabPanelAwitch( index );
 
                     })
                 })
@@ -87,22 +84,23 @@
         //Tab重用Menu
         class Tab extends Menu{
             // 构造函数的参数问题和Menu一样，需要优化
-            constructor( className, panelClass, selected ){
+            constructor( opt ){
 
-                super( className );
+                super( opt );
 
-                this.init2();
+                Object.assign(this,opt);
+
+                this.init();
             }
 
-            init2(){
+            init(){
+                console.log(this);
 
-                this.rootClass=this.className || 'tab-content';
-
-                this.root=document.querySelector( '.'+this.rootClass );
+                this.root=document.querySelector( this.nav || '.tab-content' );
                 
-                this.segments=this.root.querySelectorAll(" .segment" );
+                this.segments=this.root.querySelectorAll( this.panel );
 
-                this.selected=this.selected || this.root.querySelector(" .item.active" );
+                this.selected=this.selected || this.root.querySelector( " "+this.itemSelector+".active" );
 
                 let event=new Event('click');
 
@@ -110,7 +108,7 @@
 
             }
 
-            funCall(index){
+            onTabPanelAwitch(index){
                 this.segments.forEach( (item) =>{
 
                     item.classList.remove( 'active' );
@@ -125,9 +123,23 @@
 
         }
 
-        const menu=new Menu('menu-content .menu');
+        // const menuList=document.querySelector('.menu-content .menu');
 
-        const tab=new Tab('tab-content');
+        // const TabList=document.querySelector('.tab-content');
+
+        const menu=new Menu({
+            nav:'.menu-content .menu',
+        });
+
+        const tab=new Tab(
+            {
+                nav:'.tab-content',
+                panel:'.segment'
+            });
+
+        // const menu=new Menu(menuList);
+
+        // const tab=new Tab(TabList);
 
     </script>
 </body>

@@ -48,8 +48,12 @@
 
                 this.itemSelector='.item';
 
+                // 一般我们不会把选项给直接混合到当前实例中，可以使用
+                // this.opt = opt;
                 Object.assign(this,opt);
 
+                // 比较好的做法是，先先择menu的根节点
+                // 然后里面的元素从menu这个节点中找，而不是拼接选择器。
                 this.menuList=( typeof this.nav==='string' ? document.querySelectorAll( this.nav+ ' '+this.itemSelector ) : this.nav.querySelectorAll( this.itemSelector ) ) ;
 
                 this.onMenuItemSwitch();
@@ -141,6 +145,32 @@
 
         // const tab=new Tab(TabList);
 
+      // 使用class来实现这个例子完成得挺好的。
+      // 下面可以尝试使用function的方式完成。
+      // 我写出函数签名，你可以尝试实现
+
+      /**
+       * 构造一个Menu组件
+       * @param {Element} elm     - 菜单DOM节点
+       * @param {Object} options  - 选项
+       *  - itemSelector {String}     项选择器，默认为 li
+       *  - onSwitch {Function({ index })}       切换回调函数
+       */
+      function Menu2(elm, options) {
+
+      }
+
+      /**
+       * 构造一个Tab组件
+       * @param {Element} elm    - Tab组件DOM节点
+       * @param {Object} options - 可选参数
+       *  - tabSelector {String}     tab点击选择器，默认为 '.menu .item'
+       *  - paneSelector {String}    面板选择器，默认为 .pane
+       *  - onSwitch {Function({ index })}  切换回调函数
+       */
+      function Tab2(elm, options) {
+
+      }
     </script>
 </body>
 </html>

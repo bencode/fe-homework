@@ -13,7 +13,7 @@
 
         <!-- 菜单 -->
         <div class="menu-content">
-            <div class="ui three item menu">
+            <div class="ui three item menu nav">
                 <a class="item active">社论</a>
                 <a class="item">Reviews</a>
                 <a class="item">即将举办的活动</a>
@@ -26,7 +26,7 @@
                 <a class="item">个人简历 </a>
                 <a class="active item">Photos </a>
             </div>
-            <div class="ui bottom attached segment active">
+            <div class="ui bottom attached segment">
                 <p>个人简历的内容</p>
             </div>
             <div class="ui bottom attached segment">
@@ -50,11 +50,20 @@
 
                 // 一般我们不会把选项给直接混合到当前实例中，可以使用
                 // this.opt = opt;
-                Object.assign(this,opt);
+                this.opt= opt;
 
                 // 比较好的做法是，先先择menu的根节点
                 // 然后里面的元素从menu这个节点中找，而不是拼接选择器。
-                this.menuList=( typeof this.nav==='string' ? document.querySelectorAll( this.nav+ ' '+this.itemSelector ) : this.nav.querySelectorAll( this.itemSelector ) ) ;
+                if( typeof this.opt.nav==='string' ){
+
+                    this.menu=document.querySelector( this.opt.nav );
+
+                    this.menuList=this.menu.querySelectorAll( ' '+this.itemSelector )
+                }else {
+
+                    this.menuList=this.opt.nav.querySelectorAll( this.itemSelector );
+                    
+                }
 
                 this.onMenuItemSwitch();
 
@@ -92,7 +101,7 @@
 
                 super( opt );
 
-                Object.assign(this,opt);
+                this.opt=opt;
 
                 this.init();
             }
@@ -100,9 +109,9 @@
             init(){
                 console.log(this);
 
-                this.root=document.querySelector( this.nav || '.tab-content' );
+                this.root=document.querySelector( this.opt.nav || '.tab-content' );
                 
-                this.segments=this.root.querySelectorAll( this.panel );
+                this.segments=this.root.querySelectorAll( this.opt.panel );
 
                 this.selected=this.selected || this.root.querySelector( " "+this.itemSelector+".active" );
 
@@ -127,19 +136,18 @@
 
         }
 
-        // const menuList=document.querySelector('.menu-content .menu');
+        const menuList=document.querySelector('.menu-content .menu');
 
-        // const TabList=document.querySelector('.tab-content');
+        const TabList=document.querySelector('.tab-content');
 
-        const menu=new Menu({
-            nav:'.menu-content .menu',
-        });
+        // const menu=new Menu({
+        //     nav:menuList,
+        // });
 
-        const tab=new Tab(
-            {
-                nav:'.tab-content',
-                panel:'.segment'
-            });
+        // const tab=new Tab({
+        //     nav:'.tab-content',
+        //     panel:'.segment'
+        // });
 
         // const menu=new Menu(menuList);
 
@@ -156,10 +164,72 @@
        *  - itemSelector {String}     项选择器，默认为 li
        *  - onSwitch {Function({ index })}       切换回调函数
        */
-      function Menu2(elm, options) {
+    function Menu2(elm, options) {
 
-      }
+        const obj=new Object();
 
+        obj.elm=elm;
+
+        obj.menuItem=null;
+
+        obj.options={
+
+            itemSelector:'li',
+
+        }       
+
+        obj.init=()=>{
+
+            Menu2.prototype.inheritOption( obj.options, options );
+
+            obj.menuList=(typeof obj.elm==='string' ? document.querySelector( obj.elm ) : obj.menuList=obj.elm);
+
+            obj.menuItem=obj.menuList.querySelectorAll( obj.options.itemSelector );
+
+            Menu2.prototype.onMenuItemSwitch(obj.menuItem,obj.options);
+
+        }
+
+        obj.init();
+        
+        return obj;
+    }
+
+    Menu2.prototype.onMenuItemSwitch=(menuItem,options)=>{
+
+        menuItem.forEach( ( item,index )=>{
+
+            item.addEventListener('click',()=>{
+
+                menuItem.forEach(( item )=>{
+
+                    item.classList.remove( 'active' );
+
+                })
+
+                menuItem[ index ].classList.add( 'active' );
+
+                options.onSwitch && options.onSwitch(index);
+
+            });
+
+        })
+
+    }
+
+    Menu2.prototype.inheritOption=( objOptions, options )=>{
+
+        for( item in options ){
+
+            objOptions[item]=options[item];
+
+        }
+
+        return objOptions;
+
+    }
+
+    const menu2=Menu2('.nav',{itemSelector:'a'});
       /**
        * 构造一个Tab组件
        * @param {Element} elm    - Tab组件DOM节点
@@ -168,9 +238,60 @@
        *  - paneSelector {String}    面板选择器，默认为 .pane
        *  - onSwitch {Function({ index })}  切换回调函数
        */
-      function Tab2(elm, options) {
+    function Tab2(elm, options) {
 
-      }
+        const obj=new Object();
+
+        obj.elm=elm;
+
+        obj.options={
+
+            tabSelector:'.menu .item',
+
+            paneSelector:'.pane',
+
+            onSwitch:( index ) => {
+
+                obj.paneItem.forEach(( item )=>{
+
+                    item.style.display='none';
+                })
+                
+                obj.paneItem[index].style.display='block';
+            }
+
+        }
+
+        obj.init=()=>{
+
+            Tab2.prototype.inheritOption( obj.options, options );
+
+            obj.menuList=(typeof obj.elm==='string' ? document.querySelector( obj.elm ) : obj.menuList=obj.elm);
+
+            obj.tabItem=obj.menuList.querySelectorAll( obj.options.tabSelector );
+
+            obj.paneItem=obj.menuList.querySelectorAll( obj.options.paneSelector );
+
+            obj.selected=obj.selected || obj.menuList.querySelector( ' .item.active' );
+
+            Tab2.prototype.onMenuItemSwitch(obj.tabItem,obj.options);
+
+            let event=new Event( 'click' );
+
+            obj.selected.dispatchEvent( event );
+
+        }
+        
+        obj.init();
+        
+    }
+
+    Tab2.prototype.onMenuItemSwitch=Menu2.prototype.onMenuItemSwitch;
+
+    Tab2.prototype.inheritOption=Menu2.prototype.inheritOption;
+
+    const tab2=new Tab2('.tab-content',{ paneSelector:'.segment' });
+
     </script>
 </body>
 </html>

@@ -165,29 +165,22 @@
        *  - onSwitch {Function({ index })}       切换回调函数
        */
     function Menu2(elm, options) {
-
+        // 一般来说逻辑上一起的代码之间不要加空行
+        // 比如以下几行都可以挨在一起的
         const obj=new Object();
-
         obj.elm=elm;
-
         obj.menuItem=null;
-
         obj.options={
-
             itemSelector:'li',
-
         }       
 
         obj.init=()=>{
-
             Menu2.prototype.inheritOption( obj.options, options );
-
+            // 下面的三元表达式是否用错了？
+            // 应该是 obj.menuList = typeof xxx ? value1 : valu2, 最后一个分句 obj.menuList = obj.elm不知道什么意思。
             obj.menuList=(typeof obj.elm==='string' ? document.querySelector( obj.elm ) : obj.menuList=obj.elm);
-
             obj.menuItem=obj.menuList.querySelectorAll( obj.options.itemSelector );
-
             Menu2.prototype.onMenuItemSwitch(obj.menuItem,obj.options);
-
         }
 
         obj.init();
@@ -230,6 +223,18 @@
     }
 
     const menu2=Menu2('.nav',{itemSelector:'a'});
+
+    // 第二次重构要求：
+    // 1. 我想让这个菜单支持一个切换回调函数
+    // Menu3('.nav', {
+    //   itemSelector: 'a',
+    //   onItemSwitch: function(index) {
+    //     // 这里可以得到当前选中项的索引
+    //     console.log(index);
+    //   }
+    // })
+    // 然后我们的Tab就可以使用这个回调来实现了，在回调中根据索引来显示和隐藏面板
+
       /**
        * 构造一个Tab组件
        * @param {Element} elm    - Tab组件DOM节点
@@ -291,7 +296,6 @@
     Tab2.prototype.inheritOption=Menu2.prototype.inheritOption;
 
     const tab2=new Tab2('.tab-content',{ paneSelector:'.segment' });
-
     </script>
 </body>
 </html>

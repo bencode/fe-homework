@@ -175,12 +175,12 @@
         }       
 
         obj.init=()=>{
-            Menu2.prototype.inheritOption( obj.options, options );
+            inheritOption( obj.options, options );
             // 下面的三元表达式是否用错了？
             // 应该是 obj.menuList = typeof xxx ? value1 : valu2, 最后一个分句 obj.menuList = obj.elm不知道什么意思。
-            obj.menuList=(typeof obj.elm==='string' ? document.querySelector( obj.elm ) : obj.menuList=obj.elm);
+            obj.menuList=(typeof obj.elm==='string' ? document.querySelector( obj.elm ) : obj.elm);
             obj.menuItem=obj.menuList.querySelectorAll( obj.options.itemSelector );
-            Menu2.prototype.onMenuItemSwitch(obj.menuItem,obj.options);
+            onMenuItemSwitch(obj.menuItem,obj.options);
         }
 
         obj.init();
@@ -188,7 +188,7 @@
         return obj;
     }
 
-    Menu2.prototype.onMenuItemSwitch=(menuItem,options)=>{
+    const onMenuItemSwitch=(menuItem,options)=>{
 
         menuItem.forEach( ( item,index )=>{
 
@@ -210,7 +210,7 @@
 
     }
 
-    Menu2.prototype.inheritOption=( objOptions, options )=>{
+    const inheritOption=( objOptions, options )=>{
 
         for( item in options ){
 
@@ -269,7 +269,7 @@
 
         obj.init=()=>{
 
-            Tab2.prototype.inheritOption( obj.options, options );
+            inheritOption( obj.options, options );
 
             obj.menuList=(typeof obj.elm==='string' ? document.querySelector( obj.elm ) : obj.menuList=obj.elm);
 
@@ -279,7 +279,7 @@
 
             obj.selected=obj.selected || obj.menuList.querySelector( ' .item.active' );
 
-            Tab2.prototype.onMenuItemSwitch(obj.tabItem,obj.options);
+            onMenuItemSwitch(obj.tabItem,obj.options);
 
             let event=new Event( 'click' );
 
@@ -290,11 +290,6 @@
         obj.init();
         
     }
-
-    Tab2.prototype.onMenuItemSwitch=Menu2.prototype.onMenuItemSwitch;
-
-    Tab2.prototype.inheritOption=Menu2.prototype.inheritOption;
-
     const tab2=new Tab2('.tab-content',{ paneSelector:'.segment' });
     </script>
 </body>

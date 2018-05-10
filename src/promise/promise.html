@@ -11,12 +11,13 @@
 
         function Promise(fn){
             this.fn=fn; 
-            
+            this.fn(resolve,reject);
         }
         Promise.prototype.result=null;
         Promise.prototype.then=function( callback ){
+            
             callback(Promise.prototype.result);
-            this.fn(resolve,reject);
+            
             return new Promise(this.fn)
         }
 

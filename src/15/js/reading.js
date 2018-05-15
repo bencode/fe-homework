@@ -10,67 +10,76 @@ const deleteBtn=reading.querySelector('.delete-btn');
 const upBtn=reading.querySelector('.up-btn');
 const downBtn=reading.querySelector('.down-btn');
 let newWordsItem=null;
-let wordList=null;
 let selectedWord=null;
 
-articleInputBox.addEventListener('blur',function(){
+articleInputBox.addEventListener('blur',()=>{
     const oldArticleValue=oldArticleContent.value.trim();
-    const articleArr=oldArticleValue.split(/\s+/);
+    const articleArr=oldArticleValue.split(/\b/);
     let innerText='';
     articleArr.forEach(element => {
         innerText+='<span>'+element+'</span> ';
     });
     newArticleContent.innerHTML=innerText;
-    wordList=newArticleContent.querySelectorAll('span');
     addNewWord();
 },true);
 
-function addNewWord(){
-    wordList.forEach(function(item){
-        item.addEventListener('dblclick',function(){
-            const newWord=item.innerHTML;
-            newWordsList.innerHTML+='<li class="list-group-item">'+newWord+'</li>';
+const addNewWord=()=>{
+    const wordList=newArticleContent.querySelectorAll('span');
+    wordList.forEach((item)=>{
+        item.addEventListener('dblclick',()=>{
+            newWordsList.innerHTML+='<li class="list-group-item">'+item.innerHTML+'</li>';
             newWordsItem=newWordsList.querySelectorAll('li');
             selectedWordList();
         });
     });
-}
-function selectedWordList(){
-    newWordsItem.forEach(function(item){
-        item.addEventListener('click',function(){
-            newWordsItem.forEach(function(item){
+};
+
+const selectedWordList=()=>{
+    newWordsItem.forEach((item)=>{
+        item.addEventListener('click',()=>{
+            newWordsItem.forEach((item)=>{
                 item.classList.remove('active');
             });
             item.classList.add('active');
             selectedWord=item;
         });
     });
-}
+};
+
+const btnClickEvent=(obj, eventType, callback)=>{
+    obj.addEventListener(eventType,()=>{
+        callback(selectedWord);
+    });
+};
 
 //删除单词
-deleteBtn.addEventListener('click',function(){
-    onDeleteWord(selectedWord);
-});
-function onDeleteWord(node){
-    newWordsList.removeChild(node);
-}
+const onDeleteWord=(node)=>{
+    node && newWordsList.removeChild(node);
+};
+btnClickEvent(deleteBtn, 'click', onDeleteWord);
 
 //上移单词
-upBtn.addEventListener('click',function(){
-    onUpSelecteWord(selectedWord);
-});
-function onUpSelecteWord(node){
-    const nextNode=node.nextSibling;
-    // console.log(previousNode);
-    newWordsList.insertBefore(node,nextNode);
-}
+const onUpSelecteWord=(node)=>{
+    if(node){
+        const previousNode=node.previousSibling;
+        const firstNode=newWordsList.firstElementChild;
+        if(node===firstNode){
+            return;
+        }
+        newWordsList.insertBefore(node,previousNode);
+    }
+};
+btnClickEvent(upBtn, 'click', onUpSelecteWord);
 
 //下移单词
-upBtn.addEventListener('click',function(){
-    onDownSelecteWord(selectedWord);
-});
-function onDownSelecteWord(node){
-    // const nextNode=node.nextSibling;
-    // newWordsList.insertBefore(nextNode,node);
-}
-
+const onDownSelecteWord=(node)=>{
+    if(node){
+        const nextNode=node.nextSibling;
+        const lastNode=newWordsList.lastElementChild;
+        if(node===lastNode){
+            return;
+        }
+        newWordsList.insertBefore(nextNode,node);      
+    }
+};
+btnClickEvent(downBtn, 'click', onDownSelecteWord);

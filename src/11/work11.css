@@ -1,0 +1,123 @@
+body {
+    background-color: rgb(233, 232, 232);
+    padding: 0;
+    margin: 0;
+}
+.top {
+    border: 5px solid rgb(19, 13, 13);
+    background: rgb(19, 13, 13);
+}
+h1 {
+    margin-left: auto;
+}
+.bg {
+    width: 800px;
+    padding: 50px;
+    background-color: rgb(132, 196, 166);
+    margin: 0 auto;
+}
+
+/* :first部分的CSS */
+  .text-editor .header {
+    margin-bottom: 10px;
+  }
+  .text-editor .form-group {
+    margin-bottom: 10px;
+  }
+  .text-editor .form-group:after {
+    content: '';
+    display: block;
+    clear: both;
+  }
+  .text-editor .form-group .field {
+    float: left;
+    margin-right: 10px;
+  }
+  .text-editor .form-group .field label {
+    float: left;
+    line-height: 25px;
+    margin-right: 10px;
+  }
+  .text-editor .text-input {
+    width: 700px;
+    line-height: 20px;
+    padding: 0 10px;
+  }
+  .text-editor .add-btn {
+    border: none;
+    background: #c97646;
+    color: #fff;
+    -webkit-border-radius: 5px;
+            border-radius: 5px;
+    padding: 8px 15px;
+
+    outline: none;
+    cursor: pointer;
+  }
+  .text-editor .preview {
+    background-color:  #fff;
+    min-height: 200px;
+  }
+  .text-editor body {
+    -webkit-transform: scale(0.5);
+        -ms-transform: scale(0.5);
+            transform: scale(0.5);
+  }
+
+  /* two部分的CSS内容 */
+  .two {
+      margin-top: 50px;
+  }  
+  .clearfix:after {
+    content: '';
+    display: block;
+    clear: both;
+  }
+  a {
+    color: #000;
+  }
+  a:hover {
+    color: #000;
+  }
+  .color-mixer {
+    border: 1px solid #ccc;
+    width: 300px;
+    padding: 10px;
+  }
+  .color-mixer .adjuster .title {
+    float: left;
+  }
+  .color-mixer .adjuster .body {
+    margin-left: 50px;
+    padding-top: 2px;
+  }
+  .color-mixer .adjuster .body input {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  .color-mixer .indicator {
+    width: 100px;
+    height: 100px;
+  }
+  .color-mixer .box {
+    margin: 10px 0 0 50px;
+  }
+  .color-mixer .box:after {
+    content: '';
+    display: block;
+    clear: both;
+  }
+  .color-mixer .box .indicator {
+    float: left;
+    border: 1px solid #ddd;
+  }
+  .color-mixer .box .label {
+    float: left;
+    margin-left: 10px;
+  }
+  .reverse {
+    border: 1px solid gray;
+    width: 100px;
+    height: 100px;
+  }

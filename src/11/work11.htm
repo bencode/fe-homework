@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>“表单和输入输出”的作业和疑问</title>
+    <link rel="stylesheet" href="work11.css">
+</head>
+<body>
+    <div class="header">
+        <h1>“表单和输入输出”的作业和疑问</h1>
+    </div>
+    <div class="top"></div>
+
+    <div class="bg">
+        <div class="first">
+            <h3>富文本编辑器</h3>
+            <div class="text-editor">
+                <div class="header">
+                    <div class="form-group">
+                        <div class="field">
+                            <label for="colorInput">颜色</label>
+                            <input id="colorInput" class="color-input" type="color" value="#000000">
+                        </div>
+                        <div class="field">
+                            <label for="bgColorInput">背景色</label>
+                            <input id="bgColorInput" class="bg-color-input" type="color" value="#ffffff">
+                        </div>
+                        <div class="field">
+                            <label for="fontSizeSelect">大小</label>
+                            <select id="fontSizeSelect" class="font-size-select">
+                            <option value="14px">14px</option>
+                            <option value="16px">16px</option>
+                            <option value="18px">18px</option>
+                            <option value="20px">20px</option>
+                            <option value="28px">28px</option>
+                            <option value="40px">40px</option>
+                            </select>
+                        </div>
+                    </div>
+            
+                    <div class="form-group">
+                    <div class="field">
+                        <label for="textInput">内容</label>
+                        <input id="textInput" class="text-input" type="text">
+                    </div>
+                    </div>
+            
+                    <button class="add-btn">确  定</button>
+                </div>
+            
+                <div class="preview"></div>
+                </div>
+        </div>
+        <div class="two">
+            <h3>RGB颜色混合器</h3>
+            <div class="color-mixer">
+                <div class="adjuster">
+                    <div class="red">
+                        <div class="title">红(R)</div>
+                        <div class="body">
+                            <input id="red" type="range" min="0" max="255" value="0" onChange="Color()">
+                        </div>
+                    </div>
+                    <div class="green">
+                        <div class="title">绿(G)</div>
+                        <div class="body">
+                            <input id="green" type="range" min="0" max="255" value="0" onChange="Color()">
+                        </div>
+                    </div>
+                    <div class="blue">
+                        <div class="title">蓝(B)</div>
+                        <div class="body">
+                            <input id="blue" type="range" id="bbb" min="0" max="255" value="0" onChange="Color()">
+                        </div>
+                    </div>
+                </div>
+                <!--adjuster-->
+                <div class="box">
+                    <div class="indicator" id="indicator"></div>
+                    <div class="label" id="label">颜色值</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="text.js"></script>
+    <script src="rgb.js"></script>
+</body>
+</html> 

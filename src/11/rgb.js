@@ -19,7 +19,7 @@ function Color (){
     red = $$("red").value;
     green = $$("green").value;
     blue = $$("blue").value;
-    $$(indicator).style.backgroundColor = 'rgb(' + red + ',' + green + ',' + blue + ')';
-    $$(lable).innerHTML = 'rgb(' + red + ',' + green + ',' + blue + ')';
+    $$('indicator').style.backgroundColor = 'rgb(' + red + ',' + green + ',' + blue + ')';
+    $$('label').innerHTML = 'rgb(' + red + ',' + green + ',' + blue + ')';
 }
 Color ();

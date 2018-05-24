@@ -16,17 +16,18 @@
 .all{
     .headimg{
         .debug();
-        height: 80px;
+        // 我们一般不在容器上设置高度，里面那个a设置好高度就可以了.
+        // height: 80px;
         background-color: #d0ebf8;
         .contentimg{
-            width: 990px;
+            width: 1190px;
             margin: 0 auto;
             a{
                 .debug();
                 margin: 0 auto;
                 display: block;
-                height: 80px;
-                width: 100%;
+                height: 80px; // 这个高度可以设置，因为要撑出背景图
+                width: 100%;  // 这个100%是多余的，block元素会自动占满屏幕
                 background: url(../img/linzhiling2.jpg);
                 background-size: 100% 100%;
             }

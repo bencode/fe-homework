@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_602143_4ce1a66s9q5.css" />
+    <link rel="stylesheet" type="text/css" href='//at.alicdn.com/t/font_603092_so2nrkml9d9.css' />
+    <title>菜单一</title>
+    <style>
+        li{
+            list-style: none;
+        }
+        .menu{
+            width:150px;
+            border:2px solid #fec777;
+            position: relative;
+        }
+        .nav{
+            position: absolute;
+            width: 150px;
+            text-align: center;
+            padding: 0;
+            margin: 0;
+            border: 2px solid #efeeef;
+            top: 35px;
+            display:none;
+        }
+        li{
+            line-height: 30px;
+        }
+        .active{
+            display:block;
+        }
+    </style>
+</head>
+<body>
+    <div class="menu">
+        <div class="bar">点击我弹出菜单 <i class="iconfont icon-arrowon"></i></div>
+        <ul class="nav">
+            <li>个人主页</li>
+            <li>我的订单</li>
+            <li>我的钱包</li>
+            <li>账号管理</li>
+            <li>退出</li>
+        </ul>
+    </div>
+    <script>
+        const menu=document.querySelector('.menu');
+        const bar=menu.querySelector('.bar');
+        const nav=menu.querySelector('.nav');
+        const icon=menu.querySelector('i');
+
+        bar.addEventListener('click',(event)=>{
+            nav.classList.toggle('active');
+            toogleArrow();
+        });
+
+        document.addEventListener('click',()=>{
+            nav.classList.remove('active');
+            toogleArrow();
+        });
+
+        menu.addEventListener('click',()=>{
+            event.stopPropagation();
+        });
+
+        function toogleArrow(){
+            var flag=icon.classList.contains('icon-arrowon');
+
+            if(flag){
+                icon.classList.add('icon-arrowdown');
+                icon.classList.remove('icon-arrowon');
+            }
+            else{
+                icon.classList.add('icon-arrowon');
+                icon.classList.remove('icon-arrowdown');
+            }
+            
+        }
+    </script>
+</body>
+</html>

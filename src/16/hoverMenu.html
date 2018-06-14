@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_602143_8bblq0b4tvi5p14i.css" />
+    <title>菜单一</title>
+    <style>
+        li{
+            list-style: none;
+        }
+        .menu{
+            width:150px;
+            border:2px solid #fec777;
+            position: relative;
+        }
+        .nav{
+            position: absolute;
+            width: 150px;
+            text-align: center;
+            padding: 0;
+            margin: 0;
+            border: 2px solid #efeeef;
+            top: 35px;
+            display:none;
+        }
+        li{
+            line-height: 30px;
+        }
+        .active{
+            display:block;
+        }
+    </style>
+</head>
+<body>
+    <div class="menu">
+        <div class="bar">hover浮层菜单</div>
+        <ul class="nav">
+            <li>个人主页</li>
+            <li>我的订单</li>
+            <li>我的钱包</li>
+            <li>账号管理</li>
+            <li>退出</li>
+        </ul>
+    </div>
+    <script>
+        const menu=document.querySelector('.menu');
+        const bar=menu.querySelector('.bar');
+        const nav=menu.querySelector('.nav');
+        let timer=null;
+
+        bar.addEventListener('mouseenter',(event)=>{
+            nav.classList.add('active');
+        });
+
+        menu.addEventListener('mouseleave',(event)=>{
+            timer=setTimeout(function(){
+                nav.classList.remove('active');
+            },300);
+        });
+
+        menu.addEventListener('mouseenter',()=>{
+            clearTimeout(timer);
+        });
+    </script>
+</body>
+</html>

@@ -12,7 +12,7 @@ articleInputBox.addEventListener('blur',()=>{
     const articleArr=oldArticleValue.split(/\b/);
     // 尝试使用Array#map和 Array#join来完成下面四句话的逻辑。
     let newArticleArr=articleArr.map((element)=>{
-        return '<span>'+element+'</span>';
+        return '<span class="itemWord">'+element+'</span>';
     });
     newArticleContent.innerHTML=newArticleArr.join('');
     addNewWord();
@@ -23,21 +23,31 @@ function addNewWord(){
     // 所以不同浏览器对forEach支持的程度有限，比如IE不支持
     // 你可以使用 Array.from 将它转化成Array，然后就可以安全地使用forEach。
     // https://developer.mozilla.org/en-US/docs/Web/API/NodeList
-    const wordList=newArticleContent.querySelectorAll('span');
-    Array.from(wordList).forEach((item)=>{
-        item.addEventListener('dblclick',()=>{
-            // 这里的单词添加是使用innerHTML添加的，这会有两个问题
-            // 1. 如果单词量多的话，每次添加都得整个列表都要重橷渲染
-            // 2. 当选中某项后，添加时选中态会消失
-            // 建议使用appendChild，createElement等DOM操作来完成
-            // newWordsList.innerHTML+='<li class="list-group-item">'+item.innerHTML+'</li>';
+    newArticleContent.addEventListener('dblclick',(event)=>{
+        let flag=event.target.classList.contains('itemWord');
+        if(flag){
             let listItem=document.createElement('li');
             listItem.classList.add('list-group-item');
-            listItem.innerHTML=item.innerHTML;
+            listItem.innerHTML=event.target.innerHTML;
             newWordsList.appendChild(listItem);
             selectedWordList();
-        });
-    }); 
+        }
+    });
+    const wordList=newArticleContent.querySelectorAll('span');
+    // Array.from(wordList).forEach((item)=>{
+    //     item.addEventListener('dblclick',()=>{
+    //         // 这里的单词添加是使用innerHTML添加的，这会有两个问题
+    //         // 1. 如果单词量多的话，每次添加都得整个列表都要重橷渲染
+    //         // 2. 当选中某项后，添加时选中态会消失
+    //         // 建议使用appendChild，createElement等DOM操作来完成
+    //         // newWordsList.innerHTML+='<li class="list-group-item">'+item.innerHTML+'</li>';
+    //         let listItem=document.createElement('li');
+    //         listItem.classList.add('list-group-item');
+    //         listItem.innerHTML=item.innerHTML;
+    //         newWordsList.appendChild(listItem);
+    //         selectedWordList();
+    //     });
+    // }); 
 }
 
 function selectedWordList(){

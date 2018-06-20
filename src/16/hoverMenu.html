@@ -55,6 +55,7 @@
         });
 
         menu.addEventListener('mouseleave',(event)=>{
+            // 这个菜单实现得很好，不过下面这个也可以使用箭头函数。
             timer=setTimeout(function(){
                 nav.classList.remove('active');
             },300);

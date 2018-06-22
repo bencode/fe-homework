@@ -29,14 +29,23 @@
         li{
             line-height: 30px;
         }
-        .active{
+        .active .nav{
             display:block;
+        }
+        .icon-arrowdown{
+            display:none;
+        }
+        .active .icon-arrowdown{
+            display:inline-block;
+        }
+        .active .icon-arrowon{
+            display:none;
         }
     </style>
 </head>
 <body>
     <div class="menu">
-        <div class="bar">点击我弹出菜单 <i class="iconfont icon-arrowon"></i></div>
+        <div class="bar">点击我弹出菜单 <i class="iconfont icon-arrowon"></i><i class="iconfont icon-arrowdown"></i></div>
         <ul class="nav">
             <li>个人主页</li>
             <li>我的订单</li>
@@ -52,32 +61,33 @@
         const icon=menu.querySelector('i');
 
         bar.addEventListener('click',(event)=>{
-            nav.classList.toggle('active');
-            toogleArrow();
+            menu.classList.toggle('active');
         });
 
+        // 这里好像是有点bug, 点菜单外面还能切换那个按扭的状态
         document.addEventListener('click',()=>{
-            nav.classList.remove('active');
-            toogleArrow();
+            menu.classList.remove('active');
         });
 
         menu.addEventListener('click',()=>{
             event.stopPropagation();
         });
 
-        function toogleArrow(){
-            var flag=icon.classList.contains('icon-arrowon');
+        // 我感觉使用js去控制这个按扭的方式不是很简洁
+        // 可以使用状态切换那一节的技巧
+        // 根据菜单上active的class来切换所有的状态会更加简洁
+        // function toogleArrow(){
+        //     var flag=icon.classList.contains('icon-arrowon');
 
-            if(flag){
-                icon.classList.add('icon-arrowdown');
-                icon.classList.remove('icon-arrowon');
-            }
-            else{
-                icon.classList.add('icon-arrowon');
-                icon.classList.remove('icon-arrowdown');
-            }
-            
-        }
+        //     if(flag){
+        //         icon.classList.add('icon-arrowdown');
+        //         icon.classList.remove('icon-arrowon');
+        //     }
+        //     else{
+        //         icon.classList.add('icon-arrowon');
+        //         icon.classList.remove('icon-arrowdown');
+        //     }
+        // }
     </script>
 </body>
 </html>

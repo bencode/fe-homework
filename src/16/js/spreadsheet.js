@@ -30,6 +30,19 @@ function closest(elm,selector){
     }
     else{
         let selectorElm=elm;
+        // 1. 这里的判断可能有点小问题，parentNode会不会一直找不到，直到null?
+        // 2. 能否把if上半部分的判断，和这个while给结合起来，让代码更加精简？
+        // 关于格式化：
+        // 1. if 的格式一般会写成
+        /*
+        if (...) {
+          ...
+        } else {
+          
+        }
+        */
+       // 2. 养成在=号等操作符左右加空格的习惯， 那样代码可读性会增加。
+       // 注意我代码中空格，空行的使用，可以google简单找找代码风格，然后遵循以养成习惯
         while(!selectorElm.matches(selector)){
             selectorElm=selectorElm.parentNode;
         }
@@ -52,8 +65,11 @@ app(tBody,'focusout','.input-cell',function(){
     // 而是会使用 $(this).closest('.cell') 来直接找到指定选择器的父节点
     // 尝试实现closest函数，函数签名为: closest(elm, selector) -> {Element}
     const ancestor=closest(this,'.cell');
+    // 这里的空判断的正则有误，要加上^和$，而且还要考虑多个字符的情况
+    // 字符串为空，也可以直接 trim() 掉，在if中判断
     if(!(/\s/.test(this.value))){
         //判断是否是数字
+        // 这个正则式好像能匹配  12. 这样的形式哦， 需要优化下。
         if((/^\d+\.?\d*$/).test(this.value)){
             ancestor.classList.add('num');
         }

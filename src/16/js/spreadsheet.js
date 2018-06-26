@@ -102,7 +102,8 @@ app(tBody,'focusout','.input-cell',function(){
 });
 
 function getSum(trArr){
-
+    // 尽量不要使用RegExp.$1等静态变量，比较容易出bug，不好排查
+    // 咱们可以在上面匹配后，将match传进来。
     const list1=RegExp.$1.split('');
     const list2=RegExp.$2.split('');
     const firstcol=(list1[0].charCodeAt(0))%65+1;
@@ -136,6 +137,7 @@ addtr.addEventListener('click',function(){
     const tdLists=trLists[0].querySelectorAll('td');//6
     const len=trLists.length;
 
+    // 这里可以用let，保持一致性，用es6时就只用const或let，而不用var
     for(var i=0;i<tdLists.length;i++){
         const tdNode=document.createElement('td');
         if(i===0){
@@ -170,3 +172,32 @@ addth.addEventListener('click',function(){
     }
 });
 
+
+// 尝试实现以下几个函数
+
+(function() {
+
+    // 使用上Array#reduce
+    function sum(list) {
+      // TODO
+    }
+
+    sum([1, 2, 3, 4]);
+
+    
+    // 求一个对象列表中, age的和。 注：只对 >0 的age项求和
+    // 要求用上 Array#filter, Array.map
+    // 用上上面写的sum函数
+    function sumAge(list) {
+      
+    }
+
+    sumAge([
+        { name: 'a', age: 10 },
+        { name: 'b', age: -1 },
+        { name: 'c' },
+        { name: 'd', e: 19 },
+        { name: 'e', age: 2 },
+        { name: 'f', age: 7 }
+    ]);
+})();
